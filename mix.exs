@@ -21,7 +21,8 @@ defmodule AssetTracker.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:depo, "~> 1.7"}
+      {:depo, "~> 1.7"},
+      {:jason, "~> 1.2"}
     ]
   end
 end
