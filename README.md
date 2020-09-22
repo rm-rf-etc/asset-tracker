@@ -4,18 +4,17 @@
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+Until it's available in Hex, the package can be installed from github
 by adding `asset_tracker` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:asset_tracker, "~> 0.1.0"}
+    {
+      :asset_tracker,
+      git: "https://github.com/rm-rf-etc/asset-tracker.git",
+      ref: "9f9a15f6a3a6af08783f78f86d6c076550b20f39"
+    }
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/asset_tracker](https://hexdocs.pm/asset_tracker).
-
