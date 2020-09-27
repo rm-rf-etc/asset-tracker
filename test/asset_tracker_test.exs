@@ -1,8 +1,8 @@
-defmodule AssetTrackerTest do
+defmodule ExSqliteMarketDbTest do
   use ExUnit.Case
-  doctest AssetTracker
+  doctest ExSqliteMarketDb
 
   test "greets the world" do
-    assert AssetTracker.hello() == :world
+    assert ExSqliteMarketDb.hello() == :world
   end
 end

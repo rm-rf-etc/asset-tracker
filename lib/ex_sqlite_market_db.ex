@@ -1,4 +1,4 @@
-defmodule AssetTracker do
+defmodule ExSqliteMarketDb do
   def assets_db(path) do
     {:ok, db} = Depo.open(or_create: Path.join(path, "assets.sqlite3"))
 
@@ -16,17 +16,24 @@ defmodule AssetTracker do
     {:ok, db}
   end
 
-  def candles_db(path, name) when is_binary(name) do
-    if !File.dir?(path), do: {:error, :invalid_path}
-    if String.match?(name, ~r/^[\w]+$/), do: {:error, :invalid_name}
-    {:ok, db} = Depo.open(or_create: Path.join(path, "#{name}.sqlite3"))
+  def chart_db(base_path, symbol, i6l)
+      when is_binary(base_path) and is_binary(i6l) and is_binary(symbol) do
+    if !File.dir?(base_path), do: {:error, :invalid_path}
+
+    workdir = Path.join([base_path, symbol])
+
+    if !File.dir?(workdir) do
+      File.mkdir(workdir)
+    end
+
+    {:ok, db} = Depo.open(or_create: Path.join([workdir, "#{i6l}.sqlite3"]))
 
     Depo.transact(db, fn ->
-      Depo.write(db, "CREATE TABLE IF NOT EXISTS #{name} (o TEXT, h TEXT, l TEXT, c TEXT, v INT)")
+      Depo.write(db, "CREATE TABLE IF NOT EXISTS #{i6l} (o TEXT, h TEXT, l TEXT, c TEXT, v INT)")
 
       Depo.teach(db, %{
-        add: "INSERT OR REPLACE INTO #{name} VALUES (?1, ?2, ?3, ?4, ?5)",
-        all: "SELECT * FROM #{name}"
+        add: "INSERT OR REPLACE INTO #{i6l} VALUES (?1, ?2, ?3, ?4, ?5)",
+        all: "SELECT * FROM #{i6l}"
       })
     end)
 
